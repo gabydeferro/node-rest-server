@@ -51,20 +51,19 @@ app.post(`/usuario`, (req, res) => {
         role: body.role
     });
 
-    usuario.save((err, usuarioDB) => {
-        if (err) {
-            res.status(400).json({
-                ok: false,
-                err
-            });
-        } else {
-            res.json({
+    usuario.save()
+        .then(usuarioDB => {
+            return res.json({
                 ok: true,
                 usuario: usuarioDB
             });
-        }
-
-    });
+        })
+        .catch(err => {
+            return res.status(400).json({
+                ok: true,
+                err
+            });
+        });
 
 });
 
